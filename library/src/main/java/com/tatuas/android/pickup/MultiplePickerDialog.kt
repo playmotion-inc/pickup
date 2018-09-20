@@ -79,14 +79,14 @@ class MultiplePickerDialog(context: Context) : AbstractPickerDialog(context) {
         return AlertDialog.Builder(context)
                 .setView(parent)
                 .setCancelable(cancelable)
-                .setPositiveButton(positiveText, { _, _ ->
+                .setPositiveButton(positiveText) { _, _ ->
                     val result = Triple(
                             if (leftData.isNotEmpty()) left.value else UNDEFINED_POSITION,
                             if (centerData.isNotEmpty()) center.value else UNDEFINED_POSITION,
                             if (rightData.isNotEmpty()) right.value else UNDEFINED_POSITION)
 
                     onPositiveClicked?.invoke(result)
-                })
+                }
                 .setNegativeButton(negativeText, null)
                 .create()
     }

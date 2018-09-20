@@ -74,9 +74,9 @@ class SteppingPickerDialog(context: Context) : AbstractPickerDialog(context) {
         val builder = AlertDialog.Builder(context)
                 .setView(parent)
                 .setCancelable(cancelable)
-                .setPositiveButton(positiveText, { _, _ ->
+                .setPositiveButton(positiveText) { _, _ ->
                     onPositiveClicked?.invoke(Pair(primaryView.value, secondaryView.value))
-                })
+                }
                 .setNegativeButton(negativeText, null)
 
         // setup default data
