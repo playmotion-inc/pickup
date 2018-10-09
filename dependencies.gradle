@@ -11,7 +11,7 @@ ext {
 
     classpathes = [
             googleServices: "com.google.gms:google-services:3.2.0",
-            gradle        : "com.android.tools.build:gradle:3.2.0-alpha13",
+            gradle        : "com.android.tools.build:gradle:3.2.0",
             kotlin        : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion",
             maven         : "com.github.dcendents:android-maven-gradle-plugin:2.0",
     ]
