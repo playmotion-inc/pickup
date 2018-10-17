@@ -29,6 +29,7 @@ class MultiplePickerDialog(context: Context) : AbstractPickerDialog(context) {
     private var rightDataFirstPosition: Int = UNDEFINED_POSITION
 
     private var onPositiveClicked: ((Triple<Int, Int, Int>) -> Unit)? = null
+    private var onNegativeClicked: ((Triple<Int, Int, Int>) -> Unit)? = null
     private var onPickerChanged: ((Triple<Int, Int, Int>) -> Unit)? = null
 
     fun withCancelable(value: Boolean) = also { cancelable = value }
@@ -57,11 +58,13 @@ class MultiplePickerDialog(context: Context) : AbstractPickerDialog(context) {
 
     fun withLeftDataFirstPosition(firstPosition: Int) = also { leftDataFirstPosition = firstPosition }
 
-    fun withCenterDataFirstPosition(firstPosition: Int) = also { centerDataFirstPosition = firstPosition  }
+    fun withCenterDataFirstPosition(firstPosition: Int) = also { centerDataFirstPosition = firstPosition }
 
-    fun withRightDataFirstPosition(firstPosition: Int) = also { rightDataFirstPosition = firstPosition  }
+    fun withRightDataFirstPosition(firstPosition: Int) = also { rightDataFirstPosition = firstPosition }
 
     fun withPositiveClicked(impl: ((Triple<Int, Int, Int>) -> Unit)) = also { onPositiveClicked = impl }
+
+    fun withNegativeClicked(impl: ((Triple<Int, Int, Int>) -> Unit)) = also { onNegativeClicked = impl }
 
     fun withPickerChanged(impl: ((Triple<Int, Int, Int>) -> Unit)) = also { onPickerChanged = impl }
 
@@ -88,15 +91,22 @@ class MultiplePickerDialog(context: Context) : AbstractPickerDialog(context) {
         return AlertDialog.Builder(context)
                 .setView(parent)
                 .setCancelable(cancelable)
-                .setPositiveButton(positiveText, { _, _ ->
+                .setPositiveButton(positiveText) { _, _ ->
                     val result = Triple(
                             if (leftData.isNotEmpty()) left.value else UNDEFINED_POSITION,
                             if (centerData.isNotEmpty()) center.value else UNDEFINED_POSITION,
                             if (rightData.isNotEmpty()) right.value else UNDEFINED_POSITION)
 
                     onPositiveClicked?.invoke(result)
-                })
-                .setNegativeButton(negativeText, null)
+                }
+                .setNegativeButton(negativeText) { _, _ ->
+                    val result = Triple(
+                            if (leftData.isNotEmpty()) left.value else UNDEFINED_POSITION,
+                            if (centerData.isNotEmpty()) center.value else UNDEFINED_POSITION,
+                            if (rightData.isNotEmpty()) right.value else UNDEFINED_POSITION)
+
+                    onNegativeClicked?.invoke(result)
+                }
                 .create()
     }
 
