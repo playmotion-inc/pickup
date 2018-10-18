@@ -28,6 +28,7 @@ class SteppingPickerDialog(context: Context) : AbstractPickerDialog(context) {
     private var primaryData: List<String> = listOf()
     private var onPrimaryPicked: ((Int) -> List<String>?)? = null
     private var onPositiveClicked: ((Pair<Int, Int>) -> Unit)? = null
+    private var onNegativeClicked: ((Pair<Int, Int>) -> Unit)? = null
     private var primaryDataFirstPosition: Int = UNDEFINED_POSITION
     private var secondaryDataFirstPosition: Int = UNDEFINED_POSITION
 
@@ -55,11 +56,13 @@ class SteppingPickerDialog(context: Context) : AbstractPickerDialog(context) {
 
     fun withPrimaryPicked(impl: ((Int) -> List<String>?)?) = also { onPrimaryPicked = impl }
 
-    fun withPrimaryDataFirstPosition(firstPosition: Int) = also { primaryDataFirstPosition = firstPosition}
+    fun withPrimaryDataFirstPosition(firstPosition: Int) = also { primaryDataFirstPosition = firstPosition }
 
-    fun withSecondaryDataFirstPosition(firstPosition: Int) = also { secondaryDataFirstPosition = firstPosition}
+    fun withSecondaryDataFirstPosition(firstPosition: Int) = also { secondaryDataFirstPosition = firstPosition }
 
     fun withPositiveClicked(impl: ((Pair<Int, Int>) -> Unit)?) = also { onPositiveClicked = impl }
+
+    fun withNegativeClicked(impl: ((Pair<Int, Int>) -> Unit)?) = also { onNegativeClicked = impl }
 
     @SuppressLint("InflateParams")
     override fun create(): AlertDialog {
@@ -82,10 +85,12 @@ class SteppingPickerDialog(context: Context) : AbstractPickerDialog(context) {
         val builder = AlertDialog.Builder(context)
                 .setView(parent)
                 .setCancelable(cancelable)
-                .setPositiveButton(positiveText, { _, _ ->
+                .setPositiveButton(positiveText) { _, _ ->
                     onPositiveClicked?.invoke(Pair(primaryView.value, secondaryView.value))
-                })
-                .setNegativeButton(negativeText, null)
+                }
+                .setNegativeButton(negativeText) { _, _ ->
+                    onNegativeClicked?.invoke(Pair(primaryView.value, secondaryView.value))
+                }
 
         // setup default data
         updatePrimaryData(primaryView = primaryView, primaryData = primaryData)
@@ -108,8 +113,8 @@ class SteppingPickerDialog(context: Context) : AbstractPickerDialog(context) {
     private fun updateSecondaryData(secondaryView: NumberPicker, primaryDataPosition: Int) {
         val data = onPrimaryPicked?.invoke(primaryDataPosition) ?: createEmptyData()
         secondaryView.setData(data).run {
-            if (primaryDataFirstPosition != UNDEFINED_POSITION) {
-                toFirstPosition(primaryDataFirstPosition)
+            if (secondaryDataFirstPosition != UNDEFINED_POSITION) {
+                toFirstPosition(secondaryDataFirstPosition)
             } else {
                 toFirstPosition()
             }
