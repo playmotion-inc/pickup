@@ -113,8 +113,8 @@ class SteppingPickerDialog(context: Context) : AbstractPickerDialog(context) {
     private fun updateSecondaryData(secondaryView: NumberPicker, primaryDataPosition: Int) {
         val data = onPrimaryPicked?.invoke(primaryDataPosition) ?: createEmptyData()
         secondaryView.setData(data).run {
-            if (primaryDataFirstPosition != UNDEFINED_POSITION) {
-                toFirstPosition(primaryDataFirstPosition)
+            if (secondaryDataFirstPosition != UNDEFINED_POSITION) {
+                toFirstPosition(secondaryDataFirstPosition)
             } else {
                 toFirstPosition()
             }
