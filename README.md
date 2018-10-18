@@ -1,4 +1,4 @@
-[![Release](https://jitpack.io/v/tatuas/pickup.svg)](https://jitpack.io/#tatuas/pickup)
+[![Release](https://jitpack.io/v/playmotion-inc/pickup.svg)](https://jitpack.io/#playmotion-inc/pickup)
 
 # pickup
 An advanced picker dialog library for Android written in Kotlin.
