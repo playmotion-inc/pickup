@@ -5,6 +5,7 @@ subprojects { Project subProject ->
         repositories {
             jcenter()
             google()
+            mavenCentral()
             maven { url repositoryUrls.jitpack }
         }
         dependencies {
@@ -18,6 +19,7 @@ subprojects { Project subProject ->
     repositories {
         jcenter()
         google()
+        mavenCentral()
         maven { url repositoryUrls.jitpack }
     }
 

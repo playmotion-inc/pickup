@@ -19,6 +19,6 @@ ext {
     implementations = [
             appCompatV7: "com.android.support:appcompat-v7:27.1.1",
             kotlin     : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
-            picker     : "com.shawnlin:number-picker:2.4.6",
+            picker     : "io.github.ShawnLin013:number-picker:2.4.13",
     ]
 }
